@@ -39,4 +39,12 @@ describe("InputStream", () => {
       expect(stream.eof()).toBe(true);
     });
   });
+
+  describe("#croak", () => {
+    it("throws a new Error with the line and positionInLine attached", () => {
+      expect(() => stream.croak("Fail")).toThrow(
+        "Input stream error: Fail @ line 0, character 0"
+      );
+    });
+  });
 });

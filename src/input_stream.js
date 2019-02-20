@@ -27,7 +27,11 @@ class InputStream {
   }
 
   croak(msg) {
-    throw new Error(msg);
+    throw new Error(
+      `Input stream error: ${msg} @ line ${this.line}, character ${
+        this.positionInLine
+      }`
+    );
   }
 }
 
