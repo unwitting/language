@@ -3,7 +3,7 @@ const { InputStream } = require("./input_stream");
 describe("InputStream", () => {
   let stream;
   beforeEach(() => {
-    stream = new InputStream("hello world\nhello again");
+    stream = new InputStream("hello\nworld");
   });
 
   describe("#next", () => {
@@ -13,13 +13,12 @@ describe("InputStream", () => {
       expect(stream.next()).toBe("l");
       expect(stream.next()).toBe("l");
       expect(stream.next()).toBe("o");
-      expect(stream.next()).toBe(" ");
+      expect(stream.next()).toBe("\n");
       expect(stream.next()).toBe("w");
       expect(stream.next()).toBe("o");
       expect(stream.next()).toBe("r");
       expect(stream.next()).toBe("l");
       expect(stream.next()).toBe("d");
-      expect(stream.next()).toBe("\n");
     });
   });
 
@@ -43,8 +42,22 @@ describe("InputStream", () => {
   describe("#croak", () => {
     it("throws a new Error with the line and positionInLine attached", () => {
       expect(() => stream.croak("Fail")).toThrow(
-        "Input stream error: Fail @ line 0, character 0"
+        "Input stream error: Fail @ line 1, character 0"
       );
+    });
+  });
+
+  describe(".line", () => {
+    it("should be tracked correctly as the stream moves through the input", () => {
+      expect(stream.line).toBe(1);
+      stream.next();
+      stream.next();
+      stream.next();
+      stream.next();
+      stream.next();
+      expect(stream.line).toBe(1);
+      stream.next();
+      expect(stream.line).toBe(2);
     });
   });
 });

@@ -2,7 +2,7 @@ class InputStream {
   constructor(string) {
     this.string = string;
     this.position = 0;
-    this.line = 0;
+    this.line = 1;
     this.positionInLine = 0;
   }
 
